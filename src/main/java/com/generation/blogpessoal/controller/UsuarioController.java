@@ -5,6 +5,11 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import com.generation.blogpessoal.model.Usuario;
+import com.generation.blogpessoal.model.UsuarioLogin;
+import com.generation.blogpessoal.repository.UsuarioRepository;
+import com.generation.blogpessoal.service.UsuarioService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +21,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.generation.blogpessoal.model.Usuario;
-import com.generation.blogpessoal.model.UsuarioLogin;
-import com.generation.blogpessoal.repository.UsuarioRepository;
-import com.generation.blogpessoal.service.UsuarioService;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -48,15 +48,13 @@ public class UsuarioController {
 			.orElse(ResponseEntity.notFound().build());
 	}
 	
-	
 	@PostMapping("/logar")
-	public ResponseEntity<UsuarioLogin> login(@RequestBody Optional<UsuarioLogin> user) {
-		return usuarioService.autenticarUsuario(user)
+	public ResponseEntity<UsuarioLogin> login(@RequestBody Optional<UsuarioLogin> usuarioLogin) {
+		return usuarioService.autenticarUsuario(usuarioLogin)
 			.map(resposta -> ResponseEntity.ok(resposta))
 			.orElse(ResponseEntity.status(HttpStatus.UNAUTHORIZED).build());
 	}
 
-	
 	@PostMapping("/cadastrar")
 	public ResponseEntity<Usuario> postUsuario(@Valid @RequestBody Usuario usuario) {
 
@@ -66,7 +64,6 @@ public class UsuarioController {
 
 	}
 
-	
 	@PutMapping("/atualizar")
 	public ResponseEntity<Usuario> putUsuario(@Valid @RequestBody Usuario usuario) {
 		return usuarioService.atualizarUsuario(usuario)

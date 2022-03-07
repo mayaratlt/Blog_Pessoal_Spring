@@ -39,6 +39,7 @@ public class BasicSecurityConfig extends WebSecurityConfigurerAdapter {
 				.permitAll().antMatchers(HttpMethod.OPTIONS).permitAll().anyRequest().authenticated().and().httpBasic()
 				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().cors().and()
 				.csrf().disable();
+		
 
 	}
 }
